@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from scipy import stats
+from statsmodels.tsa.seasonal import STL
 
 def calculate_returns(close):
     """
@@ -127,3 +128,25 @@ def analyze_alpha(expected_portfolio_returns_by_date):
 
     t_statistic,p_value = stats.ttest_1samp(expected_portfolio_returns_by_date, 0)
     return t_statistic,p_value/2
+
+def seasonal_trend_decomp_plot(dataframe,target_series, freq, seasonal_smoother, period):
+    """[summary]
+
+    Args:
+        dataframe ([pandas dataframe]): [dataframe holding all of your data]
+        target_series ([series]): [Name of column in data frame you want to build plot from like 'Adj Close']
+        freq ([int]): [How do you want to resample data - 'D', 'W','M']
+        seasonal_smoother ([type]): [Length of smoother in whatever units as defined by freq]
+        period ([type]): [Periodicity of the sequence (for monthly = 12/year)]
+
+    Returns:
+        [STL plot]: [Seasonal-Trend decomposition using LOESS (STL)]
+    """
+
+    df = dataframe.set_index('Date')
+    df = df.resample(freq).last()
+    target = df[target_series]
+    stl = STL(target, seasonal = seasonal_smoother)
+    res = stl.fit()
+    res.plot()
+    return 
