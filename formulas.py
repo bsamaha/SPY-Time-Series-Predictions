@@ -150,3 +150,9 @@ def seasonal_trend_decomp_plot(dataframe,target_series, freq, seasonal_smoother,
     res = stl.fit()
     res.plot()
     return 
+
+def resample_series(dataframe, target,freq):
+    df = dataframe.set_index('Date')
+    df = df.resample(freq).last()
+    target = df[target]
+    return target
