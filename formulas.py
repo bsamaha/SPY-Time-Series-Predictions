@@ -1,7 +1,39 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import stats
 from statsmodels.tsa.seasonal import STL
+
+
+def plot_series(time, series, format="-", start=0, end=None, label=None):
+    """[Plot the series data over a time range]
+
+    Args:
+        time (data range): [The entire time span of the data in range format]
+        series ([integers]): [Series value corresponding to its point on the time axis]
+        format (str, optional): [Graph type]. Defaults to "-".
+        start (int, optional): [Time to start time series data]. Defaults to 0.
+        end ([type], optional): [Where to stop time data]. Defaults to None.
+        label ([str], optional): [Label name of series]. Defaults to None.
+    """
+    plt.plot(time[start:end], series[start:end], format, label=label)
+    plt.xlabel("Time")
+    plt.ylabel("Value")
+    if label:
+        plt.legend(fontsize=14)
+    plt.grid(True)
+
+
+def moving_average_forecast(series, window_size):
+  """Forecasts the mean of the last few values.
+     If window_size=1, then this is equivalent to naive forecast
+     This implementation is *much* faster than the previous one"""
+  mov = np.cumsum(series)
+  mov[window_size:] = mov[window_size:] - mov[:-window_size]
+  return mov[window_size - 1:-1] / window_size
+    
+
+
 
 def calculate_returns(close):
     """
