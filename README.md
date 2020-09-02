@@ -73,7 +73,7 @@ An important factor in analyzing time series data is breaking down the seasonali
 <span style="display:block;text-align:center">![Trend Decomp](/Images/Season_Trend_Decomposition.png) </span> 
 
 
-The ARIMA model used was a (p=1,d=1,q=1) model as this was the quickest to train and the difference in performance was very minute. For more information how I came to decide on this model please go examine the SPY Time Series Forecasting.ipynb.
+The ARIMA model used was a (p=1,d=1,q=1) model as this was the quickest to train and the difference in performance was very minute. For more information how I came to decide on this model please go examine the SPY Time Series Forecasting.ipynb.</br>
 <span style="display:block;text-align:center">![ARIMA Prediction](/Images/arima_predictions.png) </span> 
 
 This is a zoomed in image of the same model pictured above.
