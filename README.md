@@ -14,6 +14,11 @@
  4. [Formulas.py](insert link) - This .py file contains a miscellaneous group of functions I thought I would be using throughout this project. This file is imported into only the "Time Series Forecasting.ipynb". In the notebooks authored using Colab the relevant functions are located inside.
 
 ## Project Summary
+The resulting error from all models built and tested are shown in the bar graph below. As you can see the most simple model, a Naive forecast outperformed many of the complex deep learning algorithms in terms of error. Surprisingly to me, the LSTM outperformed all models.
+
+<span style="display:block;text-align:center">![Spy Chart](/Images/model_results.png)</span>
+
+
 
 ### Data
 The data was pulled using the yfinance API. The time period of the data is the entire existance of SPY ETF in January of 1993 until today's date of 9/1/2020. To update this data simply uncomment all cells in the "update data" cell and rerun. If enough time has passed you may want to alter the train,test,validate data splits.
