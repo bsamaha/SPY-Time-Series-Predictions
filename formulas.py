@@ -93,7 +93,13 @@ def moving_average_forecast(series, window_size):
   return mov[window_size - 1:-1] / window_size
 
 
-    
+def sequential_window_dataset(series, window_size):
+    ds = tf.data.Dataset.from_tensor_slices(series)
+    ds = ds.window(window_size + 1, shift=window_size, drop_remainder=True)
+    ds = ds.flat_map(lambda window: window.batch(window_size + 1))
+    ds = ds.map(lambda window: (window[:-1], window[1:]))
+    return ds.batch(1).prefetch(1)
+
 
 
 
