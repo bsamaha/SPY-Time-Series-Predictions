@@ -14,7 +14,7 @@
  4. [Formulas.py](insert link) - This .py file contains a miscellaneous group of functions I thought I would be using throughout this project. This file is imported into only the "Time Series Forecasting.ipynb". In the notebooks authored using Colab the relevant functions are located inside.
 
 ## Project Summary
-The resulting error from all models built and tested are shown in the bar graph below. As you can see the most simple model, a Naive forecast outperformed many of the complex deep learning algorithms in terms of error. Surprisingly to me, the LSTM outperformed all models.
+The resulting error from all models built and tested are shown in the bar graph below. As you can see the most simple model, a Naive forecast outperformed many of the complex deep learning algorithms in terms of error. Surprisingly to me, the LSTM with a 30 day rolling window outperformed all models.
 
 <span style="display:block;text-align:center">![Spy Chart](/Images/model_results.png)</span>
 
@@ -64,6 +64,8 @@ The 5 SMA follows the actualy values much more closely than the 20 SMA as expect
 #### 3. ***ARIMA Model***
 There is a lot of information about the ARIMA model in the notebook so I will not go into too great of detail here. ARIMA stands for AutoRegressive Integrated Moving Average. This means has 3 main inputs. 
 
+For more information on ARIMA models check out my blog [Build an ARIMA Model to Predict a Stock’s Price](https://levelup.gitconnected.com/build-an-arima-model-to-predict-a-stocks-price-c9e1e49367d3)
+
 - 1st input(p) uses the dependent relationship between an observation and some number of lagged observations. An example of this would be movie theaters typically sell the most tickets on Fridays so there is a correlation between the spike in ticket sales every 7 days.
 - 2nd input (d) stands for the differencing required to get the data to become stationary. Stationary is just a fancy way of saying the mean of the data does not change over time. The difference is simply Day(T) - Day(t-1).
 - 3rd input (q) is the size of the moving average window
@@ -81,6 +83,11 @@ This is a zoomed in image of the same model pictured above.
 
 #### 4. ***Linear and Dense Model using Keras/Tensorflow***
 
+Output = activation(dot(input, kernel) + bias
+That looks familiar doesn't it? It looks almost identical to y = mx+b. The dot product is sum of the products in two sequences. Well, if there is only two sequences with a length of 1 then it is just the product of those two numbers. This simplifies down to the all to familiar y = mx + b.
+
+A dense layer is just a regular layer of neurons in a neural network. Each neuron recieves input from all the neurons in the previous layer, thus densely connected. The layer has a weight matrix W, a bias vector b, and the activations of previous layer a. The following is te docstring of class Dense from the keras documentation:
+
 This first model is a linear model using only one dense layer with a single neuron. This creates a linear model.
 
 <span style="display:block;text-align:center">![ARIMA Prediction](/Images/linear_model.png) </span> 
@@ -92,15 +99,17 @@ This model is a dense model consisting of 2 different layers with 10 neurons eac
 
 #### 5. ***Reccurent neural network***
 
-Using Keras, this model was build using 2 SimpleRNN layers with 100 neurons each. 
+Using Keras, this model was build using 2 SimpleRNN layers with 100 neurons each. One model was constructed with a sequence to vector frame work and another model was created with a sequence to sequence framework. The RNNs are where our models begin to get much more complicated. Our input features from here on are 3 dimesnional. Those dimensions are batch size, # of time steps, and the # of input features. Since we are only using the closing price our input features = 1, also know as univariate. 
 
 <span style="display:block;text-align:center">![RNN Prediction](/Images/rnn_forecast.png) </span> 
 
 #### 6. ***LSTM Model***
 
-LSTM stands for Long Short-Term Memory. This means the cell actually has a memory and is therefore much better at remembering patterns and making predictions based on patterns. This was the best performing model I have built in this project.
+LSTM stands for Long Short-Term Memory. This means the cell actually has a memory and is therefore much better at remembering patterns and making predictions based on patterns. This was the best performing model I have built in this project. It is interesting how poorly the 20 day window did, but the 30 day window was the best model by far.
 
-<span style="display:block;text-align:center">![LSTM Prediction](/Images/LSTM.png) </span> 
+<span style="display:block;text-align:center">![LSTM Prediction](/Images/LSTM_20.png) </span> 
+<span style="display:block;text-align:center">![LSTM Prediction](/Images/lstm_30day_window.png) </span> 
+
 
 #### 7. ***CNN preprocessing for RNN and Full CNN with Wavenet like architecture***
 
